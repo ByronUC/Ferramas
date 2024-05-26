@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+{% endblock %}
+
+{% block contenido %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card w-75">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="card-title text-center">Listado de Empleados</h2>
+                <a href="{% url 'agregar' %}" class="btn btn-primary">Agregar Empleado</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Rut</th>
+                            <th>Dirección</th>
+                            <th>Correo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for aux in listadoemp %}
+                        <tr>
+                            <td>{{ aux.nombreEmp }}</td>
+                            <td>{{ aux.edad }}</td>
+                            <td>{{ aux.rut }}</td>
+                            <td>{{ aux.direccion }}</td>
+                            <td>{{ aux.correo }}</td>
+                            <td>
+                                <a href="{% url 'modificar' aux.id %}" class="btn btn-warning btn-sm"><i
+                                        class="fa fa-solid fa-arrows-rotate"></i></a>
+                                <a href="{% url 'deleteEmp' aux.id %}" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Estás seguro de que deseas eliminar este empleado?');"><i
+                                        class="fa fa-solid fa-trash fa-flip"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

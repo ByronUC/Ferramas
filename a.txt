@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block contenido %}
+
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+

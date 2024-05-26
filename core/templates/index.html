@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/index/index.css' %}">
+{% endblock %}
+
+{% block contenido %}
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'img/carrusel/carrusel.png' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Hola Mundo</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text" style="font-size: larger; margin-top: 25px; margin-bottom: 25px;">Los comprado!</h1>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row flex-wrap justify-content-start" style="gap: 15px;">
+        <div class="col-md-6" style="max-height: 390px; max-width: 300px;">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'img/producto/pintura.png' %}" class="card-img-top" alt="..." style="height: 200px; width: auto;">
+                <div class="label-top shadow-sm">Pintura</div>
+                <div class="card-body">
+                    <div class="clearfix mb-3">
+                        <span class="float-start badge rounded-pill bg-success">50.000&dollar;</span>
+                        <span class="float-end"><a href="#" class="small text-muted">Reviews</a></span>
+                    </div>
+                    <h5 class="card-title"></h5>
+                    <div class="text-center my-4">
+                        <a href="#" class="btn btn-warning">Agregar</a>
+                        <a href="{% url 'pintura' %}" class="btn btn-warning">Ver mas</a>
+                    </div>
+                    <div class="clearfix mb-1">
+                        <span class="float-start"><i class="far fa-question-circle"></i></span>
+                        <span class="float-end"><i class="fas fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" style="max-height: 390px; max-width: 300px;">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'img/producto/herramientas.png' %}" class="card-img-top" alt="..." style="height: 200px; width: auto;">
+                <div class="label-top shadow-sm">Pack de Herramientas</div>
+                <div class="card-body">
+                    <div class="clearfix mb-3">
+                        <span class="float-start badge rounded-pill bg-success">120.000&dollar;</span>
+                        <span class="float-end"><a href="#" class="small text-muted">Reviews</a></span>
+                    </div>
+                    <h5 class="card-title"></h5>
+                    <div class="text-center my-4">
+                        <a href="#" class="btn btn-warning">Agregar</a>
+                        <a href="{% url 'herramientas' %}" class="btn btn-warning">Ver mas</a>
+                    </div>
+                    <div class="clearfix mb-1">
+                        <span class="float-start"><i class="far fa-question-circle"></i></span>
+                        <span class="float-end"><i class="fas fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" style="max-height: 390px; max-width: 300px;">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'img/producto/sierra.png' %}" class="card-img-top" alt="..." style="height: 200px; width: auto;">
+                <div class="label-top shadow-sm">Sierra Electrico</div>
+                <div class="card-body">
+                    <div class="clearfix mb-3">
+                        <span class="float-start badge rounded-pill bg-success">250.000&dollar;</span>
+                        <span class="float-end"><a href="#" class="small text-muted">Reviews</a></span>
+                    </div>
+                    <h5 class="card-title"></h5>
+                    <div class="text-center my-4">
+                        <a href="#" class="btn btn-warning">Agregar</a>
+                        <a href="{% url 'sierra' %}" class="btn btn-warning">Ver mas</a>
+                    </div>
+                    <div class="clearfix mb-1">
+                        <span class="float-start"><i class="far fa-question-circle"></i></span>
+                        <span class="float-end"><i class="fas fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" style="max-height: 390px; max-width: 300px;">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'img/producto/taladro.png' %}" class="card-img-top" alt="..." style="height: 200px; width: auto;">
+                <div class="label-top shadow-sm">Taladro Electrico</div>
+                <div class="card-body">
+                    <div class="clearfix mb-3">
+                        <span class="float-start badge rounded-pill bg-success">115.000&dollar;</span>
+                        <span class="float-end"><a href="#" class="small text-muted">Reviews</a></span>
+                    </div>
+                    <h5 class="card-title"></h5>
+                    <div class="text-center my-4">
+                        <a href="#" class="btn btn-warning">Agregar</a>
+                        <a href="{% url 'taladro' %}" class="btn btn-warning">Ver mas</a>
+                    </div>
+                    <div class="clearfix mb-1">
+                        <span class="float-start"><i class="far fa-question-circle"></i></span>
+                        <span class="float-end"><i class="fas fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text" style="font-size: larger; margin-top: 25px; margin-bottom: 25px; "> Nuestros mejores
+                productos!
+            </h1>
+        </div>
+    </div>
+
+    {% load humanize%}
+    <div class="row">
+        {% for p in productos %}
+        <div class="col-md-6" style="max-height: 390px; max-width: 300px; margin-right: 30px; margin-bottom: 15px;">
+            <div class="card h-100 shadow-sm">
+                {% if p.imagen %}
+                <img src="{{ p.imagen.url }}" class="card-img-top" alt="..." style="height: 200px; width: auto;">
+                {% endif %}
+                <div class="card-body">
+                    <div class="clearfix mb-3">
+                        <span class="float-start badge rounded-pill bg-success">{{p.precio | intcomma}}&dollar;</span>
+                        <span class="float-end">{{p.nombre | title}}</span>
+                    </div>
+                    <h5 class="card-title"></h5>
+                    <div class="text-center my-4">
+                        <a href="#" class="btn btn-warning">Agregar</a>
+                        <a href="#" class="btn btn-warning">Ver mas</a>
+                    </div>
+                    <div class="clearfix mb-1">
+                        <span class="float-start"><i class="far fa-question-circle"></i></span>
+                        <span class="float-end"><i class="fas fa-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,8 @@
+django == 4.2.11
+pillow
+django-crispy-forms
+django-rest-framework
+django-bootstrap-v5
+crispy-bootstrap5
+django-admin-interface
+mercadopago

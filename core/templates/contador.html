@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{% endblock %}
+
+{% block contenido %}
+
+
+
+
+
+
+<div class="container max-w-4xl mx-auto bg-danger text-white p-6 rounded-lg"
+    style="margin-top: 100px; height: 550px; margin-bottom: 50px; border-radius: 5px;">
+    <div class="text-center">
+        <h1 class="text-3xl fw-bold mb-4">Sistema de Pago</h1>
+    </div>
+
+    <div class="bg-white text-dark rounded-lg p-4 mb-6" style="border-radius: 5px;">
+        <h2 class="text-xl fw-semibold mb-3 border-bottom pb-2">Confirmar Pagos por Transferencia</h2>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <p class="mb-0">Usuario 1</p>
+                <p class="mb-0">Realizó una transferencia por</p>
+            </div>
+            <p class="mb-0">$10630</p>
+            <button class="btn btn-danger">Confirmar</button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <p class="mb-0">Usuario 2</p>
+                <p class="mb-0">Realizó una transferencia por</p>
+            </div>
+            <p class="mb-0">$54100</p>
+            <button class="btn btn-danger">Confirmar</button>
+        </div>
+    </div>
+
+    <div class="bg-white text-dark rounded-lg p-4 mb-6" style="border-radius: 5px; margin-top: 15px;">
+        <h2 class="text-xl fw-semibold mb-3 border-bottom pb-2">Registrar Entrega</h2>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <p class="mb-0">Cinta Métrica</p>
+                <p class="mb-0">Id Compra: 128901285901289</p>
+            </div>
+            <p class="mb-0">Entregado 2/04/2024 13:45:62</p>
+            <button class="btn btn-danger">Registrar Entrega</button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <p class="mb-0">Cinta Métrica</p>
+                <p class="mb-0">Id Compra: 102383918303938</p>
+            </div>
+            <p class="mb-0">Entregado 1/04/2024 18:25:30</p>
+            <button class="btn btn-danger">Registrar Entrega</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}

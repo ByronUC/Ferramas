@@ -1,0 +1,20 @@
+-hacer un login funcional / X
+-agregar metodo de pago webpay / 0
+-hacer que la pagina web consuma la api / 1
+-hacer que el informe funcionen
+-que funcione el carrito / 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+- python -m pip install Pillow
+- pip install crispy-bootstrap5

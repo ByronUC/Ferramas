@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/carrito.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5 p-3 rounded cart">
+    <div class="row no-gutters">
+        <div class="col-md-8">
+            <div class="product-details mr-2">
+                <div class="d-flex flex-row align-items-center">
+                    <i class="fa fa-long-arrow-left"></i>
+                    <span class="ml-2">Continue Shopping</span>
+                </div>
+                <hr>
+                <h6 class="mb-0">Shopping cart</h6>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <span class="text-black-50">Sort by:</span>
+                        <div class="price ml-2">
+                            <span class="mr-1">price</span>
+                            <i class="fa fa-angle-down"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="cart-items">
+                    <!-- Aquí se insertarán los productos dinámicamente -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="payment-info">
+                <hr class="line">
+                <div class="d-flex justify-content-between information">
+                    <span>Total (Incluye IVA)</span>
+                    <span id="total">CLP 0</span>
+                </div>
+                <button id="checkout-button" class="btn btn-primary btn-block d-flex justify-content-between mt-3"
+                    type="button">
+                    <span id="total-button">CLP 0</span>
+                    <div id="wallet_container"> <span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let cart = JSON.parse(localStorage.getItem('cart')) || {};
+        let cartItemsContainer = document.getElementById('cart-items');
+        let totalElement = document.getElementById('total');
+        let totalButtonElement = document.getElementById('total-button');
+
+        let cartTotal = 0;
+
+        for (let productName in cart) {
+            let product = cart[productName];
+
+            if (product && product.price) {
+                let productImageURL = `{% static 'img/producto/' %}${product.image}`;
+                let priceWithoutFormatting = product.price.replace('CLP ', '').replace('.', '').replace(',', '.');
+                let productTotal = parseFloat(priceWithoutFormatting) * parseInt(product.quantity);
+
+                let productHTML = `
+                <div class="item1-shop">
+                    <tr>
+                        <td>
+                            <p style="font-size: larger; font-weight: bold; float: right; margin-top: 10px">Precio: CLP ${productTotal.toFixed(0)}</p>
+                            <div class="item1-shop">
+                                <img src="${productImageURL}" alt="${productName}" style="width: 130px; height: 130px; margin-inline-end: 30px;">
+                                <div class="desc">
+                                    <div style="font-size: 24px; font-weight: bold;">${productName}</div>
+                                    <div>Cantidad: ${product.quantity}</div>
+                                    <div><a href="#" class="text-muted" onclick="removeFromCart('${productName}')"><i class="fa fa-trash" style="margin-top: 50px;"></i> Eliminar</a></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+                <hr>
+                `;
+                cartItemsContainer.innerHTML += productHTML;
+
+                cartTotal += productTotal;
+            } else {
+                console.error(`Price is missing or invalid for product: ${productName}`);
+            }
+        }
+
+        totalElement.textContent = `CLP ${cartTotal.toFixed(0)}`;
+        totalButtonElement.textContent = `CLP ${cartTotal.toFixed(0)}`;
+    });
+
+    function removeFromCart(productName) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || {};
+        delete cart[productName];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+    }
+</script>
+
+<!-- Mercado Pago SDK -->
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const mp = new MercadoPago('{{ MERCADOPAGO_PUBLIC_KEY }}', {
+            locale: 'es-CL' // Localización para Chile
+        });
+
+        document.getElementById('checkout-button').addEventListener('click', function () {
+            let cart = JSON.parse(localStorage.getItem('cart')) || {};
+            let items = [];
+
+            for (let productName in cart) {
+                let product = cart[productName];
+                if (product && product.price) {
+                    let priceWithoutFormatting = product.price.replace('CLP ', '').replace('.', '').replace(',', '.');
+                    let unitPrice = parseFloat(priceWithoutFormatting);
+
+                    items.push({
+                        title: productName,
+                        quantity: parseInt(product.quantity),
+                        unit_price: unitPrice,
+                        currency_id: "CLP"
+                    });
+                }
+            }
+
+            fetch('{% url "create_preference" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ items: items })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(error => { throw new Error(error.message); });
+                }
+                return response.json();
+            })
+            .then(preference => {
+                if (preference.id) {
+                    mp.checkout({
+                        preference: {
+                            id: preference.id
+                        },
+                        autoOpen: true // Utiliza autoOpen en lugar de open()
+                    });
+                } else {
+                    console.error('Error en la respuesta de preferencia:', preference);
+                }
+            })
+            .catch(error => {
+                console.error('Error al crear la preferencia:', error);
+            });
+        });
+    });
+</script>
+{% endblock %}

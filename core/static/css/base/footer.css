@@ -1,0 +1,13 @@
+.footer {
+    background-color: #333; 
+    color: white; 
+    padding: 20px; 
+    border-radius: 0; 
+    margin-top: 300px; 
+    
+}
+
+.footer .social-icons a {
+    color: white; 
+    margin-right: 20px; 
+}
